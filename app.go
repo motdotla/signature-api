@@ -2,12 +2,16 @@ package main
 
 import (
 	"github.com/go-martini/martini"
+	"github.com/joho/godotenv"
 	"github.com/martini-contrib/render"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
+	godotenv.Load()
+
 	m := martini.Classic()
 	m.Use(martini.Logger())
 	m.Use(render.Renderer())
@@ -30,7 +34,8 @@ func DocumentsCreate(req *http.Request, r render.Render) {
 }
 
 func requestCarve(document_url string) {
-	carve_url := "https://carve-api.herokuapp.com/api/v0/documents/create.json?url=" + document_url + "&webhook=http://requestb.in/1dt26y61"
+	carve_root := os.Getenv("CARVE_ROOT")
+	carve_url := carve_root + "/api/v0/documents/create.json?url=" + document_url + "&webhook=http://requestb.in/1dt26y61"
 
 	log.Println(carve_url)
 

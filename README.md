@@ -18,3 +18,54 @@ cp .env.example .env
 go run app.go
 ```
 
+## Summary
+
+### API Endpoint
+
+* [http://signature-api.herokuapp.com/api/v0](http://signature-api.herokuapp.com/api/v0)
+
+### Documents
+
+#### /documents/create
+
+Create a signable document.
+
+##### Definition
+
+```
+POST|GET http://signature-api.herokuapp.com/api/v0/documents/create.json?url=[url]
+```
+
+##### Parameters
+
+* url*
+
+##### Example Request
+
+```
+http://signature-api.herokuapp.com/api/v0/documents/create.json?url=http://scottmotte.com/assets/resume.pdf
+```
+
+##### Example Response
+
+```
+{
+  "document": {
+    "pages": [ ]
+    "status": "unprocessed",
+    "url": "http://scottmotte.com/assets/resume.pdf",
+  },
+  "success": true
+}
+```
+
+##### Example Error
+
+```
+{
+  "error": {
+    "message": "This is the error message"
+  }
+  "success": false
+}
+```
