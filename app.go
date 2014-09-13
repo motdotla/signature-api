@@ -35,7 +35,8 @@ func DocumentsCreate(req *http.Request, r render.Render) {
 
 func requestCarve(document_url string) {
 	carve_root := os.Getenv("CARVE_ROOT")
-	carve_url := carve_root + "/api/v0/documents/create.json?url=" + document_url + "&webhook=http://requestb.in/1dt26y61"
+	webhook_url := "http://requestb.in/1j5etxz1"
+	carve_url := carve_root + "/api/v0/documents/create.json?url=" + document_url + "&webhook=" + webhook_url
 
 	log.Println(carve_url)
 

@@ -1,0 +1,37 @@
+FORMAT: 1A
+HOST: https://signature-api.herokuapp.com
+
+# signature-api
+
+API Platform for signing documents.
+
+The signature-api is based on [CONTRA]() API design. [JSON](http://www.json.org) is returned in all responses from the API, including errors.
+
+I've tried to make it as easy to use as possible, but if you have any feedback please [let me know](mailto:mot@mot.la).
+
+## GET /api/v0/documents/create.json?url={url}
+
+Create a document for signing. Allows for POST or GET.
+
++ Parameters
+  + url (required, string, `http://motdotla.com/assets/resume.pdf`) ... String `url` of the PDF to convert.
+
++ Response 200 (application/json)
+
+    {
+      "document": {
+        "pages": [ ],
+        "status": "unprocessed",
+        "url": "http://motdotla.com/assets/resume.pdf",
+      },
+      "success": true
+    }
+
++ Response 500 (application/json)
+
+    {
+      "error": {
+        "message": "This is the error message"
+      }
+      "success": false
+    }
