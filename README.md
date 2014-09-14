@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/motdotla/signature-api/master/signature-api.jpg" alt="signature-api" width="200" />
+<img src="https://raw.githubusercontent.com/motdotla/signature-api/master/signature-api.jpg" alt="signature-api" width="500" />
 
 # signature-api
 
