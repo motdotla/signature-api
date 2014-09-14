@@ -26,12 +26,42 @@ Create a signable document. Allows for POST or GET.
       }]
     }
 
-+ Response 500 (application/json)
++ Response 400 (application/json)
 
     {
       "errors": [{
         "code": "required",
         "field": "url",
         "message": "url cannot be blank"
+      }]
+    }
+
+## GET /api/v0/documents/{id}
+
+Get a signable document. 
+
++ Parameters
+  + id (rqeuired, string, `1`) ... String `id` of the PDF.
+
++ Response 200 (application/json)
+
+    {
+      "documents": [{
+        "pages": [{
+          "sort": 1,
+          "url": "https://carvedevelopment.s3.amazonaws.com/87911158-edbc-488b-6e60-960d67809107/1.png"
+        }],
+        "status": "processing",
+        "url": "http://motdotla.com/assets/resume.pdf"
+      }]
+    } 
+
++ Response 400 (application/json)
+
+    {
+      "errors": [{
+        "code": "not_found",
+        "field": "id",
+        "message": "id could not be found"
       }]
     }
