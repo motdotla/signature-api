@@ -1,0 +1,28 @@
+{                                                                      
+  "name": "signature-api",                                                 
+  "description": "API platform for signing documents.",
+  "keywords": [                                                        
+    "API",                                                             
+    "convert",                                                         
+    "PDF",                                                             
+    "PNG",                                                             
+    "signature",
+    "signing",
+    "documents"                                                            
+  ],                                                                   
+  "website": "https://github.com/motdotla/signature-api",                  
+  "repository": "https://github.com/motdotla/signature-api",               
+  "logo": "https://raw.githubusercontent.com/motdotla/signature-api/master/signature-api.jpg",
+  "env": {
+    "BUILDPACK_URL": "https://github.com/kr/heroku-buildpack-go.git",
+    "CARVE_ROOT": {
+      "description": "The root API url of the Carve API server",
+      "value": "https://carve-api.herokuapp.com",
+      "required": true
+    },
+    "ORCHESTRATE_API_KEY": {                                               
+      "description": "Get your orchestrate api key at http://orchestrate.io",          
+      "required": true
+    }
+  } 
+} 
