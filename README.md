@@ -2,7 +2,7 @@
 
 # signature-api
 
-API platform for signing documents. Works in tandem with [signature-worker](https://github.com/motdotla/signature-worker).
+API platform for signing documents. Works in tandem with [signature-catcher](https://github.com/motdotla/signature-catcher).
 
 ```
 curl http://signature-api.herokuapp.com/api/v0/documents/create.json?url=http://mot.la/assets/resume.pdf
