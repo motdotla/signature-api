@@ -37,7 +37,6 @@ func main() {
 	signaturelogic.Setup(ORCHESTRATE_API_KEY)
 
 	m := martini.Classic()
-	m.Use(martini.Logger())
 	m.Use(render.Renderer())
 
 	m.Any("/api/v0/documents/create.json", binding.Bind(Document{}), DocumentsCreate)
