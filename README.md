@@ -1,6 +1,6 @@
-# signature-api
+<img src="https://raw.githubusercontent.com/motdotla/signature-api/master/signature-api.jpg" alt="signature-api" width="200" />
 
-<img src="https://raw.githubusercontent.com/motdotla/signature-api/master/signature-api.jpg" alt="signature-api" align="right" width="200" />
+# signature-api
 
 API platform for signing documents. Works in tandem with [signature-worker](https://github.com/motdotla/signature-worker).
 
