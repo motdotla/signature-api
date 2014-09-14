@@ -80,7 +80,8 @@ func DocumentsCreate(document Document, req *http.Request, r render.Render) {
 }
 
 func requestCarve(document_url string, postscript string) {
-	webhook_url := "http://requestb.in/1j5etxz1"
+	//webhook_url := "http://requestb.in/1j5etxz1"
+	webhook_url := "http://mot.ngrok.com/webhook/v0/documents/processed.json"
 	carve_url := CARVE_ROOT + "/api/v0/documents/create.json?url=" + document_url + "&webhook=" + webhook_url + "&postscript=" + postscript
 
 	log.Println(carve_url)
