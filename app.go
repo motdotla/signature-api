@@ -41,6 +41,7 @@ func main() {
 	m.Use(render.Renderer())
 
 	m.Any("/api/v0/documents/create.json", binding.Bind(Document{}), DocumentsCreate)
+	m.Any("/api/v0/documents/:id.json", DocumentsShow)
 
 	m.Run()
 }
@@ -77,6 +78,18 @@ func DocumentsCreate(document Document, req *http.Request, r render.Render) {
 
 		payload := DocumentsPayload(result)
 		r.JSON(200, payload)
+	}
+}
+
+func DocumentsShow(params martini.Params, req *http.Request, r render.Render) {
+	id := params["id"]
+	result, logic_error := signaturelogic.DocumentsShow(id)
+	if logic_error != nil {
+		payload := ErrorPayload(logic_error)
+		statuscode := determineStatusCodeFromLogicError(logic_error)
+		r.JSON(statuscode, payload)
+	} else {
+		r.JSON(200, result)
 	}
 }
 
