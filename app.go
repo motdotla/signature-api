@@ -39,6 +39,7 @@ func main() {
 
 	m := martini.Classic()
 	m.Use(render.Renderer())
+	m.Use(CrossDomain())
 
 	m.Any("/api/v0/documents/create.json", binding.Bind(Document{}), DocumentsCreate)
 	m.Any("/api/v0/documents/:id.json", DocumentsShow)
