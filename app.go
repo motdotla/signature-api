@@ -71,16 +71,17 @@ func DocumentsCreate(document Document, req *http.Request, r render.Render) {
 		statuscode := determineStatusCodeFromLogicError(logic_error)
 		r.JSON(statuscode, payload)
 	} else {
-		requestCarve(_url)
+		postscript := result["id"].(string)
+		requestCarve(_url, postscript)
 
 		payload := DocumentsPayload(result)
 		r.JSON(200, payload)
 	}
 }
 
-func requestCarve(document_url string) {
+func requestCarve(document_url string, postscript string) {
 	webhook_url := "http://requestb.in/1j5etxz1"
-	carve_url := CARVE_ROOT + "/api/v0/documents/create.json?url=" + document_url + "&webhook=" + webhook_url
+	carve_url := CARVE_ROOT + "/api/v0/documents/create.json?url=" + document_url + "&webhook=" + webhook_url + "&postscript=" + postscript
 
 	log.Println(carve_url)
 
