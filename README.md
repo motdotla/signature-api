@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/motdotla/signature-api/master/signature-api.jpg" alt="signature-api" align="right" width="200" />
 
-API platform for signing documents.
+API platform for signing documents. Works in tandem with [signature-worker](https://github.com/motdotla/signature-worker).
 
 You can view the [documentation](http://docs.signatureapi.apiary.io/).
 
