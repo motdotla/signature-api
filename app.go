@@ -89,7 +89,8 @@ func DocumentsShow(params martini.Params, req *http.Request, r render.Render) {
 		statuscode := determineStatusCodeFromLogicError(logic_error)
 		r.JSON(statuscode, payload)
 	} else {
-		r.JSON(200, result)
+		payload := DocumentsPayload(result)
+		r.JSON(200, payload)
 	}
 }
 
