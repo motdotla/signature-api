@@ -106,5 +106,6 @@ func loadEnvs() {
 	godotenv.Load()
 
 	CARVE_ROOT = os.Getenv("CARVE_ROOT")
+	SIGNATURE_CATCHER_ROOT = os.Getenv("SIGNATURE_CATCHER_ROOT")
 	ORCHESTRATE_API_KEY = os.Getenv("ORCHESTRATE_API_KEY")
 }
