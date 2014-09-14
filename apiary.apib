@@ -19,19 +19,19 @@ Create a signable document. Allows for POST or GET.
 + Response 200 (application/json)
 
     {
-      "document": {
+      "documents": [{
         "pages": [ ],
         "status": "unprocessed",
         "url": "http://motdotla.com/assets/resume.pdf"
-      },
-      "success": true
+      }]
     }
 
 + Response 500 (application/json)
 
     {
-      "error": {
-        "message": "This is the error message"
-      }
-      "success": false
+      "errors": [{
+        "code": "required",
+        "field": "url",
+        "message": "url cannot be blank"
+      }]
     }
