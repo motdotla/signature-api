@@ -5,7 +5,7 @@
 API platform for signing documents. Works in tandem with [signature-worker](https://github.com/motdotla/signature-worker).
 
 ```
-curl http://signature-api.herokuapp.com/api/v0/documents/create.json?url=http%3A%2F%2Fmot.la%2Fassets%2Fresume.pdf
+curl http://signature-api.herokuapp.com/api/v0/documents/create.json?url=http://mot.la/assets/resume.pdf
 ```
 
 View the [documentation](http://docs.signatureapi.apiary.io/).
