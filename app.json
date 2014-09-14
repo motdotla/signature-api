@@ -20,6 +20,11 @@
       "value": "https://carve-api.herokuapp.com",
       "required": true
     },
+    "SIGNATURE_CATCHER_ROOT": {
+      "description": "The root API url of the signature-catcher webhook server",
+      "value": "https://signature-catcher.herokuapp.com",
+      "required": true
+    },
     "ORCHESTRATE_API_KEY": {                                               
       "description": "Get your orchestrate api key at http://orchestrate.io",          
       "required": true
