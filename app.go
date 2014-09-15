@@ -19,6 +19,8 @@ const (
 var (
 	CARVE_ROOT             string
 	SIGNATURE_CATCHER_ROOT string
+	SIGNATURE_SHARE_ROOT   string
+	SIGNATURE_API_ROOT     string
 	ORCHESTRATE_API_KEY    string
 )
 
@@ -58,6 +60,7 @@ func ErrorPayload(logic_error *handshakejserrors.LogicError) map[string]interfac
 }
 
 func DocumentsPayload(document map[string]interface{}) map[string]interface{} {
+	document["share_url"] = SIGNATURE_SHARE_ROOT + "?url=" + SIGNATURE_API_ROOT + "/api/v0/documents/" + document["id"].(string) + ".json"
 	documents := []interface{}{}
 	documents = append(documents, document)
 	payload := map[string]interface{}{"documents": documents}
@@ -76,7 +79,14 @@ func DocumentsCreate(document Document, req *http.Request, r render.Render) {
 		r.JSON(statuscode, payload)
 	} else {
 		postscript := result["id"].(string)
-		requestCarve(_url, postscript)
+		log.Println(postscript)
+		//requestCarve(_url, postscript)
+
+		log.Println(req.URL)
+		log.Println(req.URL.Scheme)
+		log.Println(req.URL.Host)
+		log.Println(req.URL.Path)
+		log.Println(req.URL.RawQuery)
 
 		payload := DocumentsPayload(result)
 		r.JSON(200, payload)
@@ -123,5 +133,7 @@ func loadEnvs() {
 
 	CARVE_ROOT = os.Getenv("CARVE_ROOT")
 	SIGNATURE_CATCHER_ROOT = os.Getenv("SIGNATURE_CATCHER_ROOT")
+	SIGNATURE_SHARE_ROOT = os.Getenv("SIGNATURE_SHARE_ROOT")
+	SIGNATURE_API_ROOT = os.Getenv("SIGNATURE_API_ROOT")
 	ORCHESTRATE_API_KEY = os.Getenv("ORCHESTRATE_API_KEY")
 }

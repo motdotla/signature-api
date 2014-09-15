@@ -25,6 +25,16 @@
       "value": "https://signature-catcher.herokuapp.com",
       "required": true
     },
+    "SIGNATURE_SHARE_ROOT": {
+      "description": "The root url of the signature-share service",
+      "value": "https://signature-share.herokuapp.com",
+      "required": true
+    },
+    "SIGNATURE_API_ROOT": {
+      "description": "The root url of the signature-api service. This should be the same url you are setting this up on. For example, https://signature-api.herokuapp.com",
+      "value": "https://signature-api.herokuapp.com",
+      "required": true
+    },
     "ORCHESTRATE_API_KEY": {                                               
       "description": "Get your orchestrate api key at http://orchestrate.io",          
       "required": true
