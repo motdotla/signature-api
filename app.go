@@ -79,14 +79,7 @@ func DocumentsCreate(document Document, req *http.Request, r render.Render) {
 		r.JSON(statuscode, payload)
 	} else {
 		postscript := result["id"].(string)
-		log.Println(postscript)
-		//requestCarve(_url, postscript)
-
-		log.Println(req.URL)
-		log.Println(req.URL.Scheme)
-		log.Println(req.URL.Host)
-		log.Println(req.URL.Path)
-		log.Println(req.URL.RawQuery)
+		requestCarve(_url, postscript)
 
 		payload := DocumentsPayload(result)
 		r.JSON(200, payload)
