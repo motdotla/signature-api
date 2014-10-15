@@ -35,6 +35,10 @@ type Document struct {
 	Url string `form:"url" json:"url"`
 }
 
+type Signing struct {
+	DocumentId string `form:"document_id" json:"document_id"`
+}
+
 type SignatureElement struct {
 	X          string `form:"x" json:"x"`
 	Y          string `form:"y" json:"y"`
@@ -53,6 +57,7 @@ func main() {
 
 	m.Any("/api/v0/documents/create.json", binding.Bind(Document{}), DocumentsCreate)
 	m.Any("/api/v0/documents/:id.json", DocumentsShow)
+	m.Any("/api/v0/signings/create.json", binding.Bind(Signing{}), SigningsCreate)
 	m.Any("/api/v0/signature_elements/create.json", binding.Bind(SignatureElement{}), SignatureElementsCreate)
 
 	m.Run()
@@ -72,6 +77,14 @@ func DocumentsPayload(document map[string]interface{}) map[string]interface{} {
 	documents := []interface{}{}
 	documents = append(documents, document)
 	payload := map[string]interface{}{"documents": documents}
+
+	return payload
+}
+
+func SigningsPayload(signing map[string]interface{}) map[string]interface{} {
+	signings := []interface{}{}
+	signings = append(signings, signing)
+	payload := map[string]interface{}{"signings": signings}
 
 	return payload
 }
@@ -115,6 +128,21 @@ func DocumentsShow(params martini.Params, req *http.Request, r render.Render) {
 	}
 }
 
+func SigningsCreate(signing Signing, req *http.Request, r render.Render) {
+	document_id := signing.DocumentId
+
+	params := map[string]interface{}{"document_id": document_id}
+	result, logic_error := signaturelogic.SigningsCreate(params)
+	if logic_error != nil {
+		payload := ErrorPayload(logic_error)
+		statuscode := determineStatusCodeFromLogicError(logic_error)
+		r.JSON(statuscode, payload)
+	} else {
+		payload := SigningsPayload(result)
+		r.JSON(200, payload)
+	}
+}
+
 func SignatureElementsCreate(signature_element SignatureElement, req *http.Request, r render.Render) {
 	x := signature_element.X
 	y := signature_element.Y
@@ -132,6 +160,7 @@ func SignatureElementsCreate(signature_element SignatureElement, req *http.Reque
 		r.JSON(200, payload)
 	}
 }
+
 func requestCarve(document_url string, postscript string) {
 	webhook_url := SIGNATURE_CATCHER_ROOT + "/webhook/v0/documents/processed.json"
 	carve_url := CARVE_ROOT + "/api/v0/documents/create.json?url=" + document_url + "&webhook=" + webhook_url + "&postscript=" + postscript

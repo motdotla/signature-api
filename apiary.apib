@@ -68,6 +68,31 @@ Get a signable document.
       }]
     }
 
+## GET /api/v0/signings/create.json?document_id={document_id}
+
+Create a signing session. Allows for POST or GET.
+
++ Parameters
+  + document_id (required, string, `123456`) ... String `document_id` of the document to sign.
+
++ Response 200 (application/json)
+
+    {
+      "signings": [{
+        "id": "123456"
+      }]
+    }
+
++ Response 400 (application/json)
+
+    {
+      "errors": [{
+        "code": "required",
+        "field": "document_id",
+        "message": "document_id cannot be blank"
+      }]
+    }
+
 ## GET /api/v0/signature_elements/create.json?x={x}&y={y}&url={url}&page_number={page_number}
 
 Create a signature_element in a signing. Allows for POST or GET.
