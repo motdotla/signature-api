@@ -60,7 +60,7 @@ func ErrorPayload(logic_error *handshakejserrors.LogicError) map[string]interfac
 }
 
 func DocumentsPayload(document map[string]interface{}) map[string]interface{} {
-	document["share_url"] = SIGNATURE_SHARE_ROOT + "?url=" + SIGNATURE_API_ROOT + "/api/v0/documents/" + document["id"].(string) + ".json"
+	document["share_url"] = SIGNATURE_SHARE_ROOT + "?document_url=" + SIGNATURE_API_ROOT + "/api/v0/documents/" + document["id"].(string) + ".json"
 	documents := []interface{}{}
 	documents = append(documents, document)
 	payload := map[string]interface{}{"documents": documents}
