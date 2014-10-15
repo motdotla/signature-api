@@ -119,7 +119,7 @@ func SignatureElementsCreate(signature_element SignatureElement, req *http.Reque
 	x := signature_element.X
 	y := signature_element.Y
 	_url := signature_element.Url
-	page_number := signature_element.page_number
+	page_number := signature_element.PageNumber
 
 	params := map[string]interface{}{"x": x, "y": y, "url": _url, "page_number": page_number}
 	result, logic_error := signaturelogic.SignatureElementsCreate(params)
