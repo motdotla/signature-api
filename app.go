@@ -35,6 +35,13 @@ type Document struct {
 	Url string `form:"url" json:"url"`
 }
 
+type SignatureElement struct {
+	X          string `form:"x" json:"x"`
+	Y          string `form:"y" json:"y"`
+	Url        string `form:"url" json:"url"`
+	PageNumber string `form:"page_number" json:"page_number"`
+}
+
 func main() {
 	loadEnvs()
 
@@ -46,6 +53,7 @@ func main() {
 
 	m.Any("/api/v0/documents/create.json", binding.Bind(Document{}), DocumentsCreate)
 	m.Any("/api/v0/documents/:id.json", DocumentsShow)
+	m.Any("/api/v0/signature_elements/create.json", binding.Bind(SignatureElement{}), SignatureElementsCreate)
 
 	m.Run()
 }
@@ -64,6 +72,14 @@ func DocumentsPayload(document map[string]interface{}) map[string]interface{} {
 	documents := []interface{}{}
 	documents = append(documents, document)
 	payload := map[string]interface{}{"documents": documents}
+
+	return payload
+}
+
+func SignatureElementsPayload(signature_element map[string]interface{}) map[string]interface{} {
+	signature_elements := []interface{}{}
+	signature_elements = append(signature_elements, signature_element)
+	payload := map[string]interface{}{"signature_elements": signature_elements}
 
 	return payload
 }
@@ -99,6 +115,23 @@ func DocumentsShow(params martini.Params, req *http.Request, r render.Render) {
 	}
 }
 
+func SignatureElementsCreate(signature_element SignatureElement, req *http.Request, r render.Render) {
+	x := signature_element.X
+	y := signature_element.Y
+	_url := signature_element.Url
+	page_number := signature_element.page_number
+
+	params := map[string]interface{}{"x": x, "y": y, "url": _url, "page_number": page_number}
+	result, logic_error := signaturelogic.SignatureElementsCreate(params)
+	if logic_error != nil {
+		payload := ErrorPayload(logic_error)
+		statuscode := determineStatusCodeFromLogicError(logic_error)
+		r.JSON(statuscode, payload)
+	} else {
+		payload := SignatureElementsPayload(result)
+		r.JSON(200, payload)
+	}
+}
 func requestCarve(document_url string, postscript string) {
 	webhook_url := SIGNATURE_CATCHER_ROOT + "/webhook/v0/documents/processed.json"
 	carve_url := CARVE_ROOT + "/api/v0/documents/create.json?url=" + document_url + "&webhook=" + webhook_url + "&postscript=" + postscript

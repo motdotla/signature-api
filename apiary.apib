@@ -67,3 +67,35 @@ Get a signable document.
         "message": "id could not be found"
       }]
     }
+
+## GET /api/v0/signature_elements/create.json?x={x}&y={y}&url={url}&page_number={page_number}
+
+Create a signature_element in a signing. Allows for POST or GET.
+
++ Parameters
+  + x (required, integer, `20`) ... Integer `x` position of the element.
+  + y (required, integer, `20`) ... Integer `y` position of the element.
+  + url (required, string, `somedataurl`) ... String `url` as a data url image of the signature.
+  + page_number (required, integer, `1`) ... Integer `page_number` of the element.
+
++ Response 200 (application/json)
+
+    {
+      "signature_elements": [{
+        "x": 20,
+        "y": 20,
+        "url": "somedataurl",
+        "page_number": 1
+      }]
+    }
+
++ Response 400 (application/json)
+
+    {
+      "errors": [{
+        "code": "required",
+        "field": "x",
+        "message": "x cannot be blank"
+      }]
+    }
+
