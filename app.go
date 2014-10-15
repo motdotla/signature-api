@@ -44,6 +44,7 @@ type SignatureElement struct {
 	Y          string `form:"y" json:"y"`
 	Url        string `form:"url" json:"url"`
 	PageNumber string `form:"page_number" json:"page_number"`
+	SigningId  string `form:"signing_id" json:"signing_id"`
 }
 
 func main() {
@@ -148,8 +149,9 @@ func SignatureElementsCreate(signature_element SignatureElement, req *http.Reque
 	y := signature_element.Y
 	_url := signature_element.Url
 	page_number := signature_element.PageNumber
+	signing_id := signature_element.SigningId
 
-	params := map[string]interface{}{"x": x, "y": y, "url": _url, "page_number": page_number}
+	params := map[string]interface{}{"x": x, "y": y, "url": _url, "page_number": page_number, "signing_id": signing_id}
 	result, logic_error := signaturelogic.SignatureElementsCreate(params)
 	if logic_error != nil {
 		payload := ErrorPayload(logic_error)

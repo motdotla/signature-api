@@ -102,15 +102,17 @@ Create a signature_element in a signing. Allows for POST or GET.
   + y (required, string, `20`) ... String `y` position of the element.
   + url (required, string, `somedataurl`) ... String `url` as a data url image of the signature.
   + page_number (required, string, `1`) ... String `page_number` of the element.
+  + signing_id (required, string, `12345`) ... String `signing_id` for the signing that the element belongs to.
 
 + Response 200 (application/json)
 
     {
       "signature_elements": [{
-        "x": 20,
-        "y": 20,
+        "x": "20",
+        "y": "20",
         "url": "somedataurl",
-        "page_number": 1
+        "page_number": "1",
+        "signing_id": "12345"
       }]
     }
 
