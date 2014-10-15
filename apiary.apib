@@ -68,19 +68,19 @@ Get a signable document.
       }]
     }
 
-## GET /api/v0/signings/create.json?document_id={document_id}
+## GET /api/v0/signings/create.json?document_url={document_url}
 
 Create a signing session. Allows for POST or GET.
 
 + Parameters
-  + document_id (required, string, `123456`) ... String `document_id` of the document to sign.
+  + document_url (required, string, `https://signature-api.herokuapp.com/api/v0/documents/ef7ba0c7-dab7-425a-b849-d8157c40cd83.json`) ... String `document_url` of the document to sign.
 
 + Response 200 (application/json)
 
     {
       "signings": [{
         "id": "123456",
-        "document_id": "1",
+        "document_url": "1",
         "signature_elements": [],
         "text_elements": []
       }]
@@ -91,8 +91,8 @@ Create a signing session. Allows for POST or GET.
     {
       "errors": [{
         "code": "required",
-        "field": "document_id",
-        "message": "document_id cannot be blank"
+        "field": "document_url",
+        "message": "document_url cannot be blank"
       }]
     }
 

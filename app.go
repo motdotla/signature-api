@@ -36,7 +36,7 @@ type Document struct {
 }
 
 type Signing struct {
-	DocumentId string `form:"document_id" json:"document_id"`
+	DocumentUrl string `form:"document_url" json:"document_url"`
 }
 
 type SignatureElement struct {
@@ -143,9 +143,9 @@ func SigningsShow(params martini.Params, req *http.Request, r render.Render) {
 	}
 }
 func SigningsCreate(signing Signing, req *http.Request, r render.Render) {
-	document_id := signing.DocumentId
+	document_url := signing.DocumentUrl
 
-	params := map[string]interface{}{"document_id": document_id}
+	params := map[string]interface{}{"document_url": document_url}
 	result, logic_error := signaturelogic.SigningsCreate(params)
 	if logic_error != nil {
 		payload := ErrorPayload(logic_error)
