@@ -96,6 +96,34 @@ Create a signing session. Allows for POST or GET.
       }]
     }
 
+## GET /api/v0/signings/{id}
+
+Get a signing session. 
+
++ Parameters
+  + id (rqeuired, string, `1`) ... String `id` of the signing session.
+
++ Response 200 (application/json)
+
+    {
+      "signings": [{
+        "id": "123456",
+        "document_url": "1",
+        "signature_elements": [],
+        "text_elements": []
+      }]
+    }
+
++ Response 400 (application/json)
+
+    {
+      "errors": [{
+        "code": "not_found",
+        "field": "id",
+        "message": "id could not be found"
+      }]
+    }
+
 ## GET /api/v0/signature_elements/create.json?x={x}&y={y}&url={url}&page_number={page_number}&signing_id={signing_id}
 
 Create a signature_element in a signing. Allows for POST or GET.
