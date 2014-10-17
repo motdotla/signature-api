@@ -41,6 +41,14 @@ type SignatureElement struct {
 	SigningId  string `form:"signing_id" json:"signing_id"`
 }
 
+type TextElement struct {
+	X          string `form:"x" json:"x"`
+	Y          string `form:"y" json:"y"`
+	Content    string `form:"content" json:"content"`
+	PageNumber string `form:"page_number" json:"page_number"`
+	SigningId  string `form:"signing_id" json:"signing_id"`
+}
+
 func main() {
 	loadEnvs()
 
@@ -61,6 +69,7 @@ func main() {
 	m.Any("/api/v0/signings/create.json", binding.Bind(Signing{}), SigningsCreate)
 	m.Any("/api/v0/signings/:id.json", SigningsShow)
 	m.Any("/api/v0/signature_elements/create.json", binding.Bind(SignatureElement{}), SignatureElementsCreate)
+	m.Any("/api/v0/text_elements/create.json", binding.Bind(TextElement{}), TextElementsCreate)
 
 	m.Run()
 }
@@ -95,6 +104,14 @@ func SignatureElementsPayload(signature_element map[string]interface{}) map[stri
 	signature_elements := []interface{}{}
 	signature_elements = append(signature_elements, signature_element)
 	payload := map[string]interface{}{"signature_elements": signature_elements}
+
+	return payload
+}
+
+func TextElementsPayload(text_element map[string]interface{}) map[string]interface{} {
+	text_elements := []interface{}{}
+	text_elements = append(text_elements, text_element)
+	payload := map[string]interface{}{"text_elements": text_elements}
 
 	return payload
 }
@@ -172,6 +189,25 @@ func SignatureElementsCreate(signature_element SignatureElement, req *http.Reque
 		r.JSON(statuscode, payload)
 	} else {
 		payload := SignatureElementsPayload(result)
+		r.JSON(200, payload)
+	}
+}
+
+func TextElementsCreate(text_element TextElement, req *http.Request, r render.Render) {
+	x := text_element.X
+	y := text_element.Y
+	content := text_element.Content
+	page_number := text_element.PageNumber
+	signing_id := text_element.SigningId
+
+	params := map[string]interface{}{"x": x, "y": y, "content": content, "page_number": page_number, "signing_id": signing_id}
+	result, logic_error := signaturelogic.TextElementsCreate(params)
+	if logic_error != nil {
+		payload := ErrorPayload(logic_error)
+		statuscode := determineStatusCodeFromLogicError(logic_error)
+		r.JSON(statuscode, payload)
+	} else {
+		payload := TextElementsPayload(result)
 		r.JSON(200, payload)
 	}
 }

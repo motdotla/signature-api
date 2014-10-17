@@ -157,3 +157,36 @@ Create a signature_element in a signing. Allows for POST or GET.
       }]
     }
 
+## GET /api/v0/text_elements/create.json?x={x}&y={y}&content={content}&page_number={page_number}&signing_id={signing_id}
+
+Create a text_element in a signing. Allows for POST or GET.
+
++ Parameters
+  + x (required, string, `20`) ... String `x` position of the element.
+  + y (required, string, `20`) ... String `y` position of the element.
+  + content (required, string, `Some content`) ... String `content` as a string of text.
+  + page_number (required, string, `1`) ... String `page_number` of the element.
+  + signing_id (required, string, `12345`) ... String `signing_id` for the signing that the element belongs to.
+
++ Response 200 (application/json)
+
+    {
+      "text_elements": [{
+        "x": "20",
+        "y": "20",
+        "content": "Some Text",
+        "page_number": "1",
+        "signing_id": "12345"
+      }]
+    }
+
++ Response 400 (application/json)
+
+    {
+      "errors": [{
+        "code": "required",
+        "field": "x",
+        "message": "x cannot be blank"
+      }]
+    }
+
