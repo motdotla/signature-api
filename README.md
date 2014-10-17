@@ -25,4 +25,3 @@ go run app.go
 ```
 
 Edit the contents of `.env`.
-
