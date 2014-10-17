@@ -5,6 +5,7 @@ import (
 	"github.com/handshakejs/handshakejserrors"
 	"github.com/joho/godotenv"
 	"github.com/martini-contrib/binding"
+	"github.com/martini-contrib/cors"
 	"github.com/martini-contrib/render"
 	"github.com/motdotla/signaturelogic"
 	"log"
@@ -23,13 +24,6 @@ var (
 	SIGNATURE_API_ROOT     string
 	ORCHESTRATE_API_KEY    string
 )
-
-func CrossDomain() martini.Handler {
-	return func(res http.ResponseWriter) {
-		res.Header().Add("Access-Control-Allow-Origin", "*")
-		res.Header().Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-	}
-}
 
 type Document struct {
 	Url string `form:"url" json:"url"`
@@ -53,8 +47,14 @@ func main() {
 	signaturelogic.Setup(ORCHESTRATE_API_KEY)
 
 	m := martini.Classic()
+	m.Use(cors.Allow(&cors.Options{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"POST", "GET", "PUT", "PATCH", "DELETE"},
+		AllowHeaders:     []string{"Origin", "X-Requested-With", "Content-Type", "Content-Length", "Accept"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 	m.Use(render.Renderer())
-	m.Use(CrossDomain())
 
 	m.Any("/api/v0/documents/create.json", binding.Bind(Document{}), DocumentsCreate)
 	m.Any("/api/v0/documents/:id.json", DocumentsShow)
