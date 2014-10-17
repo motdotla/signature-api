@@ -69,7 +69,9 @@ func main() {
 	m.Any("/api/v0/signings/create.json", binding.Bind(Signing{}), SigningsCreate)
 	m.Any("/api/v0/signings/:id.json", SigningsShow)
 	m.Any("/api/v0/signature_elements/create.json", binding.Bind(SignatureElement{}), SignatureElementsCreate)
+	m.Any("/api/v0/signature_elements/:id/update.json", binding.Bind(SignatureElement{}), SignatureElementsUpdate)
 	m.Any("/api/v0/text_elements/create.json", binding.Bind(TextElement{}), TextElementsCreate)
+	//m.Any("/api/v0/text_elements/:id/update.json", binding.Bind(TextElement{}), TextElementsUpdate)
 
 	m.Run()
 }
@@ -183,6 +185,23 @@ func SignatureElementsCreate(signature_element SignatureElement, req *http.Reque
 
 	params := map[string]interface{}{"x": x, "y": y, "url": _url, "page_number": page_number, "signing_id": signing_id}
 	result, logic_error := signaturelogic.SignatureElementsCreate(params)
+	if logic_error != nil {
+		payload := ErrorPayload(logic_error)
+		statuscode := determineStatusCodeFromLogicError(logic_error)
+		r.JSON(statuscode, payload)
+	} else {
+		payload := SignatureElementsPayload(result)
+		r.JSON(200, payload)
+	}
+}
+
+func SignatureElementsUpdate(params martini.Params, signature_element SignatureElement, req *http.Request, r render.Render) {
+	id := params["id"]
+	x := signature_element.X
+	y := signature_element.Y
+
+	payload := map[string]interface{}{"x": x, "y": y, "id": id}
+	result, logic_error := signaturelogic.SignatureElementsUpdate(payload)
 	if logic_error != nil {
 		payload := ErrorPayload(logic_error)
 		statuscode := determineStatusCodeFromLogicError(logic_error)
