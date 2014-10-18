@@ -187,6 +187,26 @@ Update a signature_element. Allows for POST or GET.
       }]
     }
 
+## GET /api/v0/signature_elements/{id}/delete.json
+
+Delete a signature_element. Allows for POST or GET.
+
++ Response 200 (application/json)
+
+    {
+      "success": "true"
+    }
+
++ Response 400 (application/json)
+
+    {
+      "errors": [{
+        "code": "required",
+        "field": "id",
+        "message": "id cannot be blank"
+      }]
+    }
+
 ## GET /api/v0/text_elements/create.json?x={x}&y={y}&content={content}&page_number={page_number}&signing_id={signing_id}
 
 Create a text_element in a signing. Allows for POST or GET.
@@ -247,6 +267,26 @@ Update a text_element. Allows for POST or GET.
         "code": "required",
         "field": "x",
         "message": "x cannot be blank"
+      }]
+    }
+
+## GET /api/v0/text_elements/{id}/delete.json
+
+Delete a text_element. Allows for POST or GET.
+
++ Response 200 (application/json)
+
+    {
+      "success": "true"
+    }
+
++ Response 400 (application/json)
+
+    {
+      "errors": [{
+        "code": "required",
+        "field": "id",
+        "message": "id cannot be blank"
       }]
     }
 
