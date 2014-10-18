@@ -80,6 +80,7 @@ Create a signing session. Allows for POST or GET.
     {
       "signings": [{
         "id": "123456",
+        "status": "signing",
         "document_url": "1",
         "signature_elements": [],
         "text_elements": []
@@ -101,13 +102,43 @@ Create a signing session. Allows for POST or GET.
 Get a signing session. 
 
 + Parameters
-  + id (rqeuired, string, `1`) ... String `id` of the signing session.
+  + id (required, string, `1`) ... String `id` of the signing session.
 
 + Response 200 (application/json)
 
     {
       "signings": [{
         "id": "123456",
+        "status": "signing",
+        "document_url": "1",
+        "signature_elements": [],
+        "text_elements": []
+      }]
+    }
+
++ Response 400 (application/json)
+
+    {
+      "errors": [{
+        "code": "not_found",
+        "field": "id",
+        "message": "id could not be found"
+      }]
+    }
+
+## GET /api/v0/signings/{id}/mark_signed.json
+
+Marks a signing session 'signed'.
+
++ Parameters
+  + id (required, string, `1`) ... String `id` of the signing session.
+
++ Response 200 (application/json)
+
+    {
+      "signings": [{
+        "id": "123456",
+        "status": "signed",
         "document_url": "1",
         "signature_elements": [],
         "text_elements": []

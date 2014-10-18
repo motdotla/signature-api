@@ -68,6 +68,7 @@ func main() {
 	m.Any("/api/v0/documents/:id.json", DocumentsShow)
 	m.Any("/api/v0/signings/create.json", binding.Bind(Signing{}), SigningsCreate)
 	m.Any("/api/v0/signings/:id.json", SigningsShow)
+	m.Any("/api/v0/signings/:id/mark_signed.json", SigningsMarkSigned)
 	m.Any("/api/v0/signature_elements/create.json", binding.Bind(SignatureElement{}), SignatureElementsCreate)
 	m.Any("/api/v0/signature_elements/:id/update.json", binding.Bind(SignatureElement{}), SignatureElementsUpdate)
 	m.Any("/api/v0/signature_elements/:id/delete.json", SignatureElementsDelete)
@@ -163,6 +164,20 @@ func SigningsShow(params martini.Params, req *http.Request, r render.Render) {
 		r.JSON(200, payload)
 	}
 }
+
+func SigningsMarkSigned(params martini.Params, req *http.Request, r render.Render) {
+	id := params["id"]
+	result, logic_error := signaturelogic.SigningsMarkSigned(id)
+	if logic_error != nil {
+		payload := ErrorPayload(logic_error)
+		statuscode := determineStatusCodeFromLogicError(logic_error)
+		r.JSON(statuscode, payload)
+	} else {
+		payload := SigningsPayload(result)
+		r.JSON(200, payload)
+	}
+}
+
 func SigningsCreate(signing Signing, req *http.Request, r render.Render) {
 	document_url := signing.DocumentUrl
 
