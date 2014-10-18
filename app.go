@@ -70,8 +70,10 @@ func main() {
 	m.Any("/api/v0/signings/:id.json", SigningsShow)
 	m.Any("/api/v0/signature_elements/create.json", binding.Bind(SignatureElement{}), SignatureElementsCreate)
 	m.Any("/api/v0/signature_elements/:id/update.json", binding.Bind(SignatureElement{}), SignatureElementsUpdate)
+	m.Any("/api/v0/signature_elements/:id/delete.json", SignatureElementsDelete)
 	m.Any("/api/v0/text_elements/create.json", binding.Bind(TextElement{}), TextElementsCreate)
 	m.Any("/api/v0/text_elements/:id/update.json", binding.Bind(TextElement{}), TextElementsUpdate)
+	m.Any("/api/v0/text_elements/:id/delete.json", TextElementsDelete)
 
 	m.Run()
 }
@@ -212,6 +214,18 @@ func SignatureElementsUpdate(params martini.Params, signature_element SignatureE
 	}
 }
 
+func SignatureElementsDelete(params martini.Params, req *http.Request, r render.Render) {
+	id := params["id"]
+	_, logic_error := signaturelogic.SignatureElementsDelete(id)
+	if logic_error != nil {
+		payload := ErrorPayload(logic_error)
+		statuscode := determineStatusCodeFromLogicError(logic_error)
+		r.JSON(statuscode, payload)
+	} else {
+		r.JSON(200, map[string]interface{}{"success": true})
+	}
+}
+
 func TextElementsCreate(text_element TextElement, req *http.Request, r render.Render) {
 	x := text_element.X
 	y := text_element.Y
@@ -247,6 +261,20 @@ func TextElementsUpdate(params martini.Params, text_element TextElement, req *ht
 		r.JSON(200, payload)
 	}
 }
+
+func TextElementsDelete(params martini.Params, req *http.Request, r render.Render) {
+	id := params["id"]
+
+	_, logic_error := signaturelogic.TextElementsDelete(id)
+	if logic_error != nil {
+		payload := ErrorPayload(logic_error)
+		statuscode := determineStatusCodeFromLogicError(logic_error)
+		r.JSON(statuscode, payload)
+	} else {
+		r.JSON(200, map[string]interface{}{"success": true})
+	}
+}
+
 func requestCarve(document_url string, postscript string) {
 	webhook_url := SIGNATURE_CATCHER_ROOT + "/webhook/v0/documents/processed.json"
 	carve_url := CARVE_ROOT + "/api/v0/documents/create.json?url=" + document_url + "&webhook=" + webhook_url + "&postscript=" + postscript
